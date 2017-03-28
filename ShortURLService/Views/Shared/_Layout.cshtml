@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - URL Shortener Service</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <style>
+        .busyOverlay {
+            position: absolute;
+            margin: auto;
+            top: 0px;
+            left: 0px;
+            right: 0px;
+            bottom: 0px;
+            background: rgba(0,0,0,0.6);
+            z-index: 9999999999999999999999999;
+            overflow: hidden !important;
+        }
+
+        .busyIndicator {
+            position: absolute;
+            margin: auto;
+            top: 200px;
+            /*bottom: 0px;*/
+            left: 0px;
+            right: 0px;
+            width: 170px;
+            height: 170px;
+            background: #FFF;
+            -webkit-border-radius: 100%;
+            -moz-border-radius: 100%;
+            -o-border-radius: 100%;
+            -ms-border-radius: 100%;
+            -k-border-radius: 100%;
+            border-radius: 100%;
+            box-shadow: rgba(255,255,255,0.9) 0px 0px 200px;
+        }
+
+            .busyIndicator img {
+                position: absolute;
+                margin: auto;
+                top: 0px;
+                bottom: 0px;
+                left: 0px;
+                right: 0px;
+                border-radius: 100%;
+            }
+    </style>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Short URL Service", "Index", "Home", null, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year WSP </p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+<script>
+    $(document).ready(function () {
+        $('#_preloader').fadeOut(2000);
+    });
+    
+</script>
+
+ <!-- Busy Overlay -->
+<div class="busyOverlay" id="_preloader">
+    <div class="busyIndicator">
+        <img src="~/Content/image/hex-loader2.gif" alt="">
+    </div>
+</div>
