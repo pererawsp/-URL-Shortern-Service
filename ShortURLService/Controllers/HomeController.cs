@@ -18,11 +18,24 @@ namespace ShortURLService.Controllers
         UrlContext db = new UrlContext();
         public ActionResult Index()
         {
-            IEnumerable<URL> model = new List<URL>();
+            IEnumerable<URL> Tempmodel = new List<URL>();
+            List<URL> model = new List<URL>();
             if (User.Identity.IsAuthenticated)
             {
                 string userId = User.Identity.GetUserId();
-                model = db.Urls.Where(u => u.UserId == userId).OrderByDescending(u => u.GeneratedDate).AsEnumerable();
+                Tempmodel = db.Urls.Where(u => u.UserId == userId).OrderByDescending(u => u.GeneratedDate).AsEnumerable();
+
+                var objList = Tempmodel.Cast<URL>().ToList();
+
+                foreach(var url in objList)
+                {
+                    var urlState = db.UrlStats.Where(us => us.UrlId == url.UrlId).ToList();
+                    url.UrlStats = urlState;
+
+                    model.Add(url);
+                }
+
+
             }
             return View(model);
         }
